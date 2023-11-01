@@ -20,6 +20,7 @@ app.get("/weather", async (request, response) => {
     return {
       description: place.weather.description,
       date: place.datetime,
+      temp: place.temp
     };
   });
   response.json(weatherData);

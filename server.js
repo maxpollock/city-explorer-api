@@ -15,14 +15,22 @@ app.get("/weather", async (request, response) => {
   const lon = request.query.lon;
   const API = `https://api.weatherbit.io/v2.0/current?key=${process.env.WEATHER_API_KEY}&lat=${lat}&lon=${lon}`;
   const res = await axios.get(API);
-  console.log(res.data)
+
+  const movieAPI = `https://api.themoviedb.org/3/search/movie?query=${res.data.data[0].city_name}&api_key=${process.env.MOVIE_API_KEY}`;
+  const movieRes = await axios.get(movieAPI);
+  console.log(movieRes.data);
+
   const weatherData = res.data.data.map((place) => {
     return {
       description: place.weather.description,
       date: place.datetime,
-      temp: place.temp
+      temp: place.temp,
+      title: movieRes.data.results[0].original_title,
+      overview: movieRes.data.results[0].overview,
+      popularity: movieRes.data.results[0].popularity,
     };
   });
-  response.json(weatherData);
+
   console.log(weatherData);
+  response.json(weatherData);
 });

@@ -25,6 +25,7 @@ app.get("/weather", async (request, response) => {
       description: place.weather.description,
       date: place.datetime,
       temp: place.temp,
+      code: place.weather.icon,
       title: movieRes.data.results[0].original_title,
       overview: movieRes.data.results[0].overview,
       popularity: movieRes.data.results[0].popularity,
